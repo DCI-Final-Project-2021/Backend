@@ -14,12 +14,14 @@ export default {
     try {
       const user = await User.findByEmail(req.body.email);
       if (user) {
-        const userID = user[0]._id;
+        const userID = user._id;
+        //customer sollte kontrolliert werden
         const result = await Customer.create(userID);
         return res.json({result});
       } else {
         const newUser = await User.create(req.body);
         const result = await Customer.create(newUser._id);
+        console.log("customer data",result);
         res.json({result});
       }
     } catch (error) {
