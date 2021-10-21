@@ -32,8 +32,8 @@ var corsOptions = {
   },
   credentials: true
 }
-server.use(cors(corsOptions));
-// server.use(cors());
+// server.use(cors(corsOptions));
+server.use(cors());
 
 // const config = {
 //   origin: "http://localhost:3000", "http://localhost:3001", // zugriff auf cookie des backendserver ermöglichen
