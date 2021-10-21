@@ -68,6 +68,6 @@ server.use("/customers", customersRouter);
 server.use(express.static("./app/driverOrderTracking"));
 
 // server.use((req, res) => res.sendFile("./app/deliciousThings/index.html"));
-server.use((req, res) => res.sendFile("./app/driverOrderTracking/index.html"));
+server.use((req, res) => res.sendFile("./index.html"));
 
 server.use(errorHandling);
