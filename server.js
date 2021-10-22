@@ -32,8 +32,8 @@ var corsOptions = {
   },
   credentials: true
 }
-// server.use(cors(corsOptions));
-server.use(cors());
+server.use(cors(corsOptions));
+// server.use(cors());
 
 // const config = {
 //   origin: "http://localhost:3000", "http://localhost:3001", // zugriff auf cookie des backendserver ermöglichen
@@ -51,7 +51,7 @@ server.get("/auth", checkAuth, async function (req, res, next) {
   try {
     const token = req.cookies;
     console.log("auth token", token)
-    res.json({result: token});
+    res.json({ result: token });
   } catch (error) {
     next(error);
   }
