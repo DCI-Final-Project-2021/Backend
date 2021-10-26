@@ -41,7 +41,7 @@ export default {
 	},
 
 	readOne: async function (id) {
-		return await Order.findById(id);
+		return await Order.findById(id).populate({ path: "customerId", populate: { path: "user" } }).populate({ path: "driver", populate: { path: "user" } });
 	},
 
 	create: async function (foods, customerId, total) {
@@ -53,7 +53,7 @@ export default {
 			driver: null,
 			isDelivered: false,
 		});
-		return await order.save();
+		return await order.save(); // return yazilan yerde await gerekli degil order.save() burda yeterli
 	},
 
 	updateByID: async function (id, orderObject) {

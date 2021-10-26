@@ -10,18 +10,22 @@ import cookieParser from "cookie-parser";
 import checkAuth from "./middlewares/checkAuth.js";
 import cors from "cors";
 import path from "path";
+import {io} from "./lib/socket.js";
+import { URL } from 'url';
 
 dotenv.config();
-
 database.init();
 
+// SOCKET IO
+import { createServer } from 'http';
 const server = express();
+const app = createServer(server);
 
-server.listen(process.env.PORT, () =>
-  console.log(`server listening on port ${process.env.PORT}`)
+app.listen(process.env.PORT, () =>
+console.log(`server listening on port ${process.env.PORT}`)
 );
 
-var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:2005', 'https://delicious-things.herokuapp.com/']
+var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:2005', 'http://localhost:2006', 'https://delicious-things.herokuapp.com/']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -41,7 +45,11 @@ server.use(cors());
 // };
 // server.use(cors(config));
 
-
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 server.use(cookieParser());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
@@ -50,8 +58,7 @@ server.use(express.urlencoded({ extended: true }));
 server.get("/auth", checkAuth, async function (req, res, next) {
   try {
     const token = req.cookies;
-    console.log("auth token", token)
-    res.json({ result: token });
+    res.json({result: token});
   } catch (error) {
     next(error);
   }
@@ -63,11 +70,11 @@ server.use("/users", usersRouter);
 server.use("/drivers", driversRouter);
 server.use("/customers", customersRouter);
 
-
-// server.use(express.static("./app/deliciousThings"));
 server.use(express.static("./app/driverOrderTracking"));
 
-// server.use((req, res) => res.sendFile("./app/deliciousThings/index.html"));
 server.use((req, res) => res.sendFile("index.html"));
+
+const url = new URL('./app/driverOrderTracking/index.html', import.meta.url).pathname;
+server.use((req, res) => res.sendFile(url));
 
 server.use(errorHandling);
