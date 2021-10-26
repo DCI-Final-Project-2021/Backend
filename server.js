@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
   // });
 })
 
-
+Object.assign(server.response, {io});
 
 
 
