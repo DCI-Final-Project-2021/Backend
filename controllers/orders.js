@@ -1,4 +1,5 @@
 import Order from "../models/Order.js";
+import { io } from "socket.io-client";
 
 export default {
     readAll: async function (req, res, next) {
@@ -22,6 +23,14 @@ export default {
     create: async function (req, res, next) {
         try {
             const result = await Order.create(req.body.food, req.body.customerId, req.body.total );
+            
+
+            const newOrder = await Order.readOne(result._id);
+            console.log("order create ne dönüyor", result);
+            console.log("order read one create ne dönüyor", newOrder);
+            let socket = io("http://localhost:2006");
+            socket.emit("new_order", newOrder);
+
             res.json({result});
         } catch (error) {
             next(error);
