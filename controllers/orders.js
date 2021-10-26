@@ -29,7 +29,7 @@ export default {
             console.log("order create ne dönüyor", result);
             console.log("order read one create ne dönüyor", newOrder);
             let socket = io();
-            socket.broadcast.emit("cart", newOrder);
+            socket.emit("cart", newOrder);
 
             res.json({result});
         } catch (error) {
