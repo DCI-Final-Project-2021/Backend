@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import checkAuth from "./middlewares/checkAuth.js";
 import cors from "cors";
 import path from "path";
-import {io} from "./lib/socket.js";
+// import {io} from "./lib/socket.js";
 import { URL } from 'url';
 
 dotenv.config();
@@ -24,6 +24,27 @@ const app = createServer(server);
 app.listen(process.env.PORT, () =>
 console.log(`server listening on port ${process.env.PORT}`)
 );
+
+import { Server } from 'socket.io';
+
+export const io = new Server(app, {cors: {origin: "*"}});
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  socket.on('cart', (order) => {
+    console.log("server socket on cart");
+    socket.broadcast.emit("cart", order);
+  });
+})
+
+
+
+
+
+
+
+
 
 var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:2005', 'http://localhost:2006', 'https://delicious-things.herokuapp.com/']
 var corsOptions = {
