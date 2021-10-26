@@ -36,7 +36,7 @@ var corsOptions = {
   },
   credentials: true
 }
-//server.use(cors(corsOptions));
+// server.use(cors(corsOptions));
 server.use(cors());
 
 // const config = {
