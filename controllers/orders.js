@@ -28,8 +28,8 @@ export default {
             const newOrder = await Order.readOne(result._id);
             console.log("order create ne dönüyor", result);
             console.log("order read one create ne dönüyor", newOrder);
-            let socket = io("http://localhost:2006");
-            socket.emit("new_order", newOrder);
+            let socket = io();
+            socket.broadcast.emit("cart", newOrder);
 
             res.json({result});
         } catch (error) {

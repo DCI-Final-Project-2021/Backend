@@ -32,10 +32,11 @@ export const io = new Server(app, {cors: {origin: "*"}});
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-  socket.on('cart', (order) => {
-    console.log("server socket on cart");
-    socket.broadcast.emit("cart", order);
-  });
+  console.log(socket.id);
+  // socket.on('cart', (order) => {
+  //   console.log("server socket on cart");
+  //   socket.broadcast.emit("cart", order);
+  // });
 })
 
 
