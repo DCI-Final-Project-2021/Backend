@@ -30,24 +30,14 @@ import { Server } from 'socket.io';
 export const io = new Server(app, {cors: {origin: "*"}});
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
-
-  console.log(socket.id);
-  // socket.on('cart', (order) => {
-  //   console.log("server socket on cart");
-  //   socket.broadcast.emit("cart", order);
-  // });
+  console.log("a user connected", socket.id);
+  io.emit("test", "abc");
 })
 
 Object.assign(server.response, {io});
 
 
-
-
-
-
-
-var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:2005', 'http://localhost:2006', 'https://delicious-things.herokuapp.com/']
+var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:2005', 'http://localhost:2006', 'http://localhost:2007', 'https://delicious-things.herokuapp.com/']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -58,8 +48,8 @@ var corsOptions = {
   },
   credentials: true
 }
-// server.use(cors(corsOptions));
-server.use(cors());
+server.use(cors(corsOptions));
+// server.use(cors());
 
 // const config = {
 //   origin: "http://localhost:3000", "http://localhost:3001", // zugriff auf cookie des backendserver ermöglichen
