@@ -32,6 +32,10 @@ export const io = new Server(app, {cors: {origin: "*"}});
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
   io.emit("test", "abc");
+
+  socket.on("disconnect", (msg) => {
+    console.log("user disconnected", socket.id);
+  })
 })
 
 Object.assign(server.response, {io});
