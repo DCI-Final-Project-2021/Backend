@@ -25,7 +25,7 @@ app.listen(process.env.PORT, () =>
 console.log(`server listening on port ${process.env.PORT}`)
 );
 
-var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:2005', 'http://localhost:2006', 'https://delicious-things.herokuapp.com/']
+var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:2005', 'http://localhost:2006', 'http://localhost:2007','https://delicious-things.herokuapp.com/']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -36,8 +36,8 @@ var corsOptions = {
   },
   credentials: true
 }
-// server.use(cors(corsOptions));
-server.use(cors());
+server.use(cors(corsOptions));
+// server.use(cors());
 
 // const config = {
 //   origin: "http://localhost:3000", "http://localhost:3001", // zugriff auf cookie des backendserver ermöglichen
@@ -45,11 +45,11 @@ server.use(cors());
 // };
 // server.use(cors(config));
 
-server.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// server.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 server.use(cookieParser());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
