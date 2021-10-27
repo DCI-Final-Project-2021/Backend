@@ -10,7 +10,6 @@ import cookieParser from "cookie-parser";
 import checkAuth from "./middlewares/checkAuth.js";
 import cors from "cors";
 import path from "path";
-// import {io} from "./lib/socket.js";
 import { URL } from 'url';
 
 dotenv.config();
@@ -52,8 +51,8 @@ var corsOptions = {
   },
   credentials: true
 }
-// server.use(cors(corsOptions));
-server.use(cors());
+server.use(cors(corsOptions));
+// server.use(cors());
 
 // const config = {
 //   origin: "http://localhost:3000", "http://localhost:3001", // zugriff auf cookie des backendserver ermöglichen
@@ -61,11 +60,11 @@ server.use(cors());
 // };
 // server.use(cors(config));
 
-server.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// server.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 server.use(cookieParser());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
