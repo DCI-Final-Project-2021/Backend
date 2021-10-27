@@ -21,7 +21,6 @@ export default {
       } else {
         const newUser = await User.create(req.body);
         const result = await Customer.create(newUser._id);
-        console.log("customer data",result);
         res.json({result});
       }
     } catch (error) {
